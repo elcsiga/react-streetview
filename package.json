@@ -32,11 +32,11 @@
     "react": "global:React"
   },
   "scripts": {
-    "build": "gulp clean && SET NODE_ENV=production gulp build",
+    "build": "gulp clean && SET NODE_ENV=production && gulp build",
     "examples": "gulp dev:server",
     "lint": "eslint ./; true",
-    "publish:site": "SET NODE_ENV=production gulp publish:examples",
-    "release": "SET NODE_ENV=production gulp release",
+    "publish:site": "SET NODE_ENV=production && gulp publish:examples",
+    "release": "SET NODE_ENV=production && gulp release",
     "start": "gulp dev",
     "test": "echo \"no tests yet\" && exit 0",
     "watch": "gulp watch:lib"

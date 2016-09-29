@@ -6,26 +6,15 @@ Simple React.js component for Google Street View
 
 Live demo: [elcsiga.github.io/react-streetview](http://elcsiga.github.io/react-streetview/)
 
-To build the examples locally, run:
-
-```
-npm install
-npm start
-```
-
-Then open [`localhost:8000`](http://localhost:8000) in a browser.
-
-
 ## Installation
 
 The easiest way to use react-streetview is to install it from NPM and include it in your own React build process (using [Browserify](http://browserify.org), [Webpack](http://webpack.github.io/), etc).
-
-You can also use the standalone build by including `dist/react-streetview.js` in your page. If you use this, make sure you have already included React, and it is available as a global variable.
 
 ```
 npm install react-streetview --save
 ```
 
+You can also use the standalone build by including `dist/react-streetview.js` in your page. If you use this, make sure you have already included React, and it is available as a global variable.
 
 ## Usage
 
@@ -66,6 +55,15 @@ ReactDOM.render(<App />, document.getElementById('app'));
 ```
 
 ## Development (`src`, `lib` and the build process)
+
+To build the examples locally, run:
+
+```
+npm install
+npm start
+```
+
+Then open [`localhost:8000`](http://localhost:8000) in a browser.
 
 **NOTE:** The source code for the component is in `src`. A transpiled CommonJS version (generated with Babel) is available in `lib` for use with node.js, browserify and webpack. A UMD bundle is also built to `dist`, which can be included without the need for any build system.
 
