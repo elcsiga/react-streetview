@@ -18,7 +18,7 @@ You can also use the standalone build by including `dist/react-streetview.js` in
 
 ## Usage
 
-```
+``` javascript
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactStreetview from 'react-streetview';
