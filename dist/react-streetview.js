@@ -267,19 +267,28 @@ var ReactStreetview = (function (_React$Component) {
 		_classCallCheck(this, ReactStreetview);
 
 		_get(Object.getPrototypeOf(ReactStreetview.prototype), 'constructor', this).call(this);
-		this.state = {
-			streetView: null,
-			domElementId: 'street-view-' + Math.floor(Math.random() * 1000000)
-		};
+		this.streetView = null;
 	}
 
 	_createClass(ReactStreetview, [{
 		key: 'initialize',
 		value: function initialize(canvas) {
-			if (this.props.googleMaps && this.state.streetView == null) {
-				var googleMaps = this.props.googleMaps;
+			var _this = this;
 
-				this.state.streetView = new googleMaps.StreetViewPanorama(canvas, this.props.streetViewPanoramaOptions);
+			if (this.props.googleMaps && this.streetView == null) {
+				this.streetView = new this.props.googleMaps.StreetViewPanorama(canvas, this.props.streetViewPanoramaOptions);
+
+				this.streetView.addListener('position_changed', function () {
+					if (_this.props.onPositionChanged) {
+						_this.props.onPositionChanged(_this.streetView.getPosition());
+					}
+				});
+
+				this.streetView.addListener('pov_changed', function () {
+					if (_this.props.onPovChanged) {
+						_this.props.onPovChanged(_this.streetView.getPov());
+					}
+				});
 			}
 		}
 	}, {
@@ -293,13 +302,19 @@ var ReactStreetview = (function (_React$Component) {
 			this.initialize(_reactDom2['default'].findDOMNode(this));
 		}
 	}, {
+		key: 'componentWillUnmount',
+		value: function componentWillUnmount() {
+			if (this.streetView) {
+				this.props.googleMaps.event.clearInstanceListeners(this.streetView);
+			}
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			return _react2['default'].createElement('div', {
 				style: {
 					height: '100%'
-				},
-				id: this.state.domElementId
+				}
 			});
 		}
 	}]);
@@ -309,7 +324,9 @@ var ReactStreetview = (function (_React$Component) {
 
 ReactStreetview.propTypes = {
 	apiKey: _react2['default'].PropTypes.string.isRequired,
-	streetViewPanoramaOptions: _react2['default'].PropTypes.object.isRequired
+	streetViewPanoramaOptions: _react2['default'].PropTypes.object.isRequired,
+	onPositionChanged: _react2['default'].PropTypes.func,
+	onPovChanged: _react2['default'].PropTypes.func
 };
 
 ReactStreetview.defaultProps = {
