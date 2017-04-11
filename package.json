@@ -34,7 +34,7 @@
   "scripts": {
     "build": "gulp clean && SET NODE_ENV=production && gulp build",
     "examples": "gulp dev:server",
-    "lint": "eslint ./; true",
+    "lint": "eslint src/**",
     "publish:site": "SET NODE_ENV=production && gulp publish:examples",
     "release": "SET NODE_ENV=production && gulp release",
     "start": "gulp dev",
