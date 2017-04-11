@@ -26,15 +26,21 @@ var _reactStreetview2 = _interopRequireDefault(_reactStreetview);
 var App = (function (_React$Component) {
 	_inherits(App, _React$Component);
 
-	function App() {
+	function App(props) {
 		_classCallCheck(this, App);
 
-		_get(Object.getPrototypeOf(App.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(App.prototype), 'constructor', this).call(this, props);
+		this.state = {
+			position: null,
+			pov: null
+		};
 	}
 
 	_createClass(App, [{
 		key: 'render',
 		value: function render() {
+			var _this = this;
+
 			// USE YOUR OWN API KEY HERE,
 			// see https://developers.google.com/maps/documentation/javascript
 			var googleMapsApiKey = 'AIzaSyCSb2pbuLuz-sSLyV3g7qWD3uaW9Edwr8w';
@@ -48,15 +54,34 @@ var App = (function (_React$Component) {
 
 			return _react2['default'].createElement(
 				'div',
-				{ style: {
-						width: '800px',
-						height: '450px',
-						backgroundColor: '#eeeeee'
-					} },
-				_react2['default'].createElement(_reactStreetview2['default'], {
-					apiKey: googleMapsApiKey,
-					streetViewPanoramaOptions: streetViewPanoramaOptions
-				})
+				null,
+				_react2['default'].createElement(
+					'div',
+					{ style: {
+							width: '800px',
+							height: '450px',
+							backgroundColor: '#eeeeee'
+						} },
+					_react2['default'].createElement(_reactStreetview2['default'], {
+						apiKey: googleMapsApiKey,
+						streetViewPanoramaOptions: streetViewPanoramaOptions,
+						onPositionChanged: function (position) {
+							return _this.setState({ position: position });
+						},
+						onPovChanged: function (pov) {
+							return _this.setState({ pov: pov });
+						}
+					})
+				),
+				_react2['default'].createElement(
+					'div',
+					{ className: 'helper' },
+					'Position: ',
+					JSON.stringify(this.state.position),
+					_react2['default'].createElement('br', null),
+					'Pov: ',
+					JSON.stringify(this.state.pov)
+				)
 			);
 		}
 	}]);
