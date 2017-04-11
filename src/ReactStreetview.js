@@ -7,20 +7,27 @@ class ReactStreetview extends React.Component {
 
 	constructor() {
 		super();
-		this.state = {
-			streetView: null,
-			domElementId: 'street-view-' + Math.floor(Math.random() * 1000000) 
-		};
+		this.streetView = null;
 	}
 
 	initialize (canvas) {
-		if (this.props.googleMaps && this.state.streetView == null) {
-			const googleMaps = this.props.googleMaps;
-
-			this.state.streetView = new googleMaps.StreetViewPanorama(
+		if (this.props.googleMaps && this.streetView == null) {
+			this.streetView = new this.props.googleMaps.StreetViewPanorama(
 				canvas,
 				this.props.streetViewPanoramaOptions
 			);
+
+			this.streetView.addListener('position_changed',() => {
+				if (this.props.onPositionChanged) {
+					this.props.onPositionChanged(this.streetView.getPosition());
+				}
+			});
+
+			this.streetView.addListener('pov_changed',() => {
+				if (this.props.onPovChanged) {
+					this.props.onPovChanged(this.streetView.getPov());
+				}
+			});
 		}
 	}
 
@@ -31,21 +38,26 @@ class ReactStreetview extends React.Component {
 	componentDidUpdate () {
 		this.initialize(ReactDOM.findDOMNode(this));
 	}
-		
+	componentWillUnmount () {
+		if (this.streetView) {
+			this.props.googleMaps.event.clearInstanceListeners(this.streetView);
+		}
+	}
 	
 	render () {
 		return <div
 			style = {{
 				height: '100%'
 			}}
-			id = {this.state.domElementId}
 		></div>;
 	}
 }
 
 ReactStreetview.propTypes = {
 	apiKey: React.PropTypes.string.isRequired,
-	streetViewPanoramaOptions: React.PropTypes.object.isRequired
+	streetViewPanoramaOptions: React.PropTypes.object.isRequired,
+	onPositionChanged: React.PropTypes.func,
+	onPovChanged: React.PropTypes.func
 };
 
 ReactStreetview.defaultProps = {
