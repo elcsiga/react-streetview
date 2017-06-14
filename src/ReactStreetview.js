@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 import asyncLoading from 'react-async-loader';
 
@@ -43,7 +44,7 @@ class ReactStreetview extends React.Component {
 			this.props.googleMaps.event.clearInstanceListeners(this.streetView);
 		}
 	}
-	
+
 	render () {
 		return <div
 			style = {{
@@ -54,10 +55,10 @@ class ReactStreetview extends React.Component {
 }
 
 ReactStreetview.propTypes = {
-	apiKey: React.PropTypes.string.isRequired,
-	streetViewPanoramaOptions: React.PropTypes.object.isRequired,
-	onPositionChanged: React.PropTypes.func,
-	onPovChanged: React.PropTypes.func
+	apiKey: PropTypes.string.isRequired,
+	streetViewPanoramaOptions: PropTypes.object.isRequired,
+	onPositionChanged: PropTypes.func,
+	onPovChanged: PropTypes.func
 };
 
 ReactStreetview.defaultProps = {
@@ -80,4 +81,3 @@ function mapScriptsToProps (props) {
 }
 
 export default asyncLoading(mapScriptsToProps)(ReactStreetview);
-
